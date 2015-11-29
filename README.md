@@ -1,5 +1,5 @@
 # GreenHomes-Research
-This research project is based on the energy savings of electrical components installed in homes. The prime focus till now is on below three electrical compoenents installed in the user's house:
+This research project is based on the energy savings of electrical components installed in homes. The prime focus till now is on below three electrical components installed in the user's house:
 
 1. Refrigerator
 2. Computer
