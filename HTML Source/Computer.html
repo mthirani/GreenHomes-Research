@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome To Green Homes !</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>$(document).ready(function(){$('[data-toggle=\"tooltip\"]').tooltip();});</script>
+  <script>
+	$(document).ready(function(){
+		$(OperationFiltering).fadeOut(1);
+		$(ApplicationsFiltering).fadeOut(1);
+		$(SwitchOff).click(function(){
+			if($(Running).is(':checked'))
+			{
+			 $(Running).attr("checked", false);
+			 $(runningpurpose).attr("disabled",true);
+			 $(OperationFiltering).fadeOut();
+			}
+		});
+		$(Running).click(function(){
+			if($(SwitchOff).is(':checked'))
+			{
+			 $(SwitchOff).attr("checked", false);
+			 $(runningpurpose).attr("disabled",false);
+			 $(OperationFiltering).fadeIn();
+			}
+		});
+		$(Single).click(function(){
+			if($(Multiple).is(':checked'))
+			{
+			 $(Multiple).attr("checked", false);
+			 $(contextswitch).attr("disabled",true);
+			 $(appsrunning).attr("disabled",true);
+			 $(ApplicationsFiltering).fadeOut();
+			}
+		});
+		$(Multiple).click(function(){
+			if($(Single).is(':checked'))
+			{
+			 $(Single).attr("checked", false);
+			 $(contextswitch).attr("disabled",false);
+			 $(appsrunning).attr("disabled",false);
+			 $(ApplicationsFiltering).fadeIn();
+			}
+		});
+	});
+  </script>
+  <script type="text/javascript">
+	function validateForm()
+    {
+		var conf=confirm("Press OK for submitting your data");
+		if(conf==true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+    }
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand">Green Homes</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+		<li><a href="GreenHomes.html" title="Home Page" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">HOME</a></li>
+        <li><a href="#" title="Services Offered" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">SERVICES</a></li>
+        <li><a href="#" title="About Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">ABOUT</a></li>
+        <li><a href="#" title="Contact Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="well" style="background-color: rgb(250,254,254)">
+	<div class="container">
+		<div class="alert alert-info container"><strong><center>Please fill out the required inputs to get the overall benefits in consumption and cost through your computer!</center></strong></div>
+	</div>
+	<div class="container">
+	<form class="form-horizontal" name="computer" id="computer" role="form" method="GET" onsubmit="return validateForm()">
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="model">Age of Computer:</label>
+			<div class="col-sm-6">
+				<select name="OldComputer" id="OldComputer" class="form-control" form="computer" required>
+				  <option value="Less than 5 years">Less than 5 years</option>
+				  <option value="Between 5 - 10 years">Between 5 - 10 years</option>
+				  <option value="Greater than 10 years">Greater than 10 years</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="monitor">Monitor Type:</label>
+				<div class="col-sm-6">
+				<select name="Monitor" id="Monitor" class="form-control" form="computer" required>
+				  <option value="LCD">Liquid Crystal Display (LCD)</option>
+				  <option value="LED">Light Emitting Diode (LED)</option>
+				  <option value="CRT">Cathod Ray Tube (CRT)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="energystar">ENERGY STAR PC:</label>
+			<div class="col-sm-6">
+				<select name="EnergyStar" id="EnergyStar" class="form-control" form="computer" required>
+				  <option value="Yes">Yes, I do have installed ENERGY STAR computer in house</option>
+				  <option value="No">No, I do not have ENERGY STAR computer in house</option>
+				  <option value="Do not know">Do not know</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="pcusagetype">Usage Type:</label>
+			<div class="col-sm-6">
+				<select name="PCUsageType" id="PCUsageType" class="form-control" form="computer" required>
+				  <option value="Workstation">Workstation</option>
+				  <option value="Gaming">Gaming</option>
+				  <option value="Browsing">Browsing</option>
+				  <option value="Others">Other Purposes</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="pcusage">Monthly Usage:</label>
+			<div class="col-sm-6">
+				<select name="PCUsage" id="PCUsage" class="form-control" form="computer" required>
+				  <option value="Seldomly">I do seldomly use my PC</option>
+				  <option value="Frequently">I do frequently use my PC</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="screensaver">ScreenSaver Settings:</label>
+			<div class="col-sm-6">
+				<select name="ScreenSaver" id="ScreenSaver" class="form-control" form="computer" required>
+				  <option value="Yes">I do use screen saver in my PC settings</option>
+				  <option value="No">I do not use screen saver in my PC settings</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="operation">Operation After Work:</label>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="SwitchOff" id="SwitchOff" value="SwitchOff" checked>Switch off or put my PC in sleep state
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Running" id="Running" value="Running">Keep my PC running
+		</div>
+		<div id="OperationFiltering">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="purpose">Running Purpose:</label>
+				<div class="col-sm-6">
+					<select name="runningpurpose" id="runningpurpose" class="form-control" form="computer" disabled>
+					  <option value="ScreenSaverON">I do mostly use screen saver in computer for displaying advertisements/ banners</option>
+					  <option value="Downloading">I do mostly use my PC for dowloading activities after my work</option>
+					  <option value="ScreenSaverAndDownloading">I do mostly use my PC for downloading tasks and displaying banners after my work</option>
+					  <option value="Backend">I do mostly use my PC for other backend activities after my work</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="applications">Multiple Applications:</label>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Single" id="Single" value="Single" checked>Do not work on multiple applications during work
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Multiple" id="Multiple" value="Multiple">Work on multiple applications during work
+		</div>
+		<div id="ApplicationsFiltering">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="switching">Context Switching:</label>
+				<div class="col-sm-6">
+					<select name="contextswitch" id="contextswitch" class="form-control" form="computer" disabled>
+					  <option value="Sometimes">I seldomly switched from one application to another during my work</option>
+					  <option value="Frequently">I frequently switched from one application to another during my work</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="apps">Running Applications:</label>
+				<div class="col-sm-6">
+					<select name="appsrunning" id="appsrunning" class="form-control" form="computer" disabled>
+					  <option value="Yes">Yes, all applications needs to be running when I am not using it</option>
+					  <option value="No">No, all applications does not needs to be running when I am not using it</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="container">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-md">Estimate</button>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pc">Recommendations</button>
+						<!-- Modal -->
+						<div id="pc" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+							<!-- Modal content-->
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title"><span style="color:darkred; text-align:center; display: block;">Certain Recommendations</span></h4>
+							  </div>
+							  <div class="modal-body">
+								<p><b>1.</b> Turn off the computer and monitor if you&rsquo;r not going to use the Workstation for 2 hours.</p>
+								<p><b>2.</b> Use the power management features of your operating system to put your computer to sleep when you are not using it.</p>
+								<p><b>3.</b> Close applications not currently in use while using your computer.</p>
+								<p><b>4.</b> Don&rsquo;t use a screen saver-just dim or turn off the monitor when not in use.</p>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</body>
+</html>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

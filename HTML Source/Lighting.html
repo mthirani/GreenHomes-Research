@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome To Green Homes !</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>$(document).ready(function(){$('[data-toggle=\"tooltip\"]').tooltip();});</script>
+  <script>
+	$(document).ready(function(){
+		$(WellLitFiltering).fadeOut(1);
+		$(WellLitYes).click(function(){
+			if($(WellLitNo).is(':checked'))
+			{
+			 $(WellLitNo).attr("checked", false);
+			 $(workarea).attr("disabled",true);
+			 $(duration).attr("disabled",true);
+			 $(WellLitFiltering).fadeOut();
+			}
+		});
+		$(WellLitNo).click(function(){
+			if($(WellLitYes).is(':checked'))
+			{
+			 $(WellLitYes).attr("checked", false);
+			 $(workarea).attr("disabled",false);
+			 $(duration).attr("disabled",false);
+			 $(WellLitFiltering).fadeIn();
+			}
+		});
+	});
+  </script>
+  <script type="text/javascript">
+	function validateForm()
+    {
+		var conf=confirm("Press OK for submitting your data");
+		if(conf==true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+    }
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand">Green Homes</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+		<li><a href="GreenHomes.html" title="Home Page" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">HOME</a></li>
+        <li><a href="#" title="Services Offered" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">SERVICES</a></li>
+        <li><a href="#" title="About Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">ABOUT</a></li>
+        <li><a href="#" title="Contact Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="well" style="background-color: rgb(250,254,254)">
+	<div class="container">
+		<div class="alert alert-info container"><strong><center>Please fill out the required inputs to get the overall benefits in consumption and cost through your lighting!</center></strong></div>
+	</div>
+	<div class="container">
+	<form class="form-horizontal" name="lighting" id="lighting" role="form" method="GET" onsubmit="return validateForm()">
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="workstation">Number of Light Bulbs:</label>
+				<div class="col-sm-6">
+					<input type="number" class="form-control" name="bulbs" id="bulbs" min="1" placeholder="Enter the total number of light bulbs in your house" required/>
+				</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="bulbtype">Bulb Type:</label>
+			<div class="col-sm-6">
+				<select name="BulbsType" id="BulbsType" class="form-control" form="lighting" required>
+				  <option value="CFL">Compact Fluorescent Lamps (CFL)</option>
+				  <option value="LED">Light Emitting Diode (LED)</option>
+				  <option value="Halogen">Halogen</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="housesize">Size Of House:</label>
+			<div class="col-sm-6">
+				<select name="HouseSize" id="HouseSize" class="form-control" form="lighting" required>
+				  <option value="Quite Big">Quite Big (>1500 sqft)</option>
+				  <option value="Medium">Medium (800-1500 sqft)</option>
+				  <option value="Small">Small (<800 sqft)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="energystar">ENERGY STAR Lights:</label>
+			<div class="col-sm-6">
+				<select name="EnergyStar" id="EnergyStar" class="form-control" form="lighting" required>
+				  <option value="Yes">Yes, I do have mostly ENERGY STAR light bulbs in house</option>
+				  <option value="No">No, I have not installed ENERGY STAR light bulbs in house</option>
+				  <option value="Do not know">Do not know</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="welllight">Well-Lit During Days:</label>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="WellLitYes" id="WellLitYes" value="Yes" checked>Yes, My house is well-lit
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="WellLitNo" id="WellLitNo" value="No">No, My house is not well-lit
+		</div>
+		<div id="WellLitFiltering">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="welllight">Work Area is well-lit:</label>
+				<div class="col-sm-6">
+					<select name="workarea" id="workarea" class="form-control" form="lighting" disabled>
+					  <option value="Yes">Yes, My work area is well-lit</option>
+					  <option value="No">No, My work area is not well-lit</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="welllight">Natural Light Duration:</label>
+				<div class="col-sm-6">
+					<select name="duration" id="duration" class="form-control" form="lighting" disabled>
+					  <option value="Less than 4 hours">Less than 4 hours</option>
+					  <option value="Between 4-6 hours">Between 4-6 hours</option>
+					  <option value="Between 6-8 hours">Between 6-8 hours</option>
+					  <option value="Greater than 8 hours">Greater than 8 hours</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="usagelightday">Lamps in Days:</label>
+			<div class="col-sm-6">
+				<select name="UsageLightsDay" id="UsageLightsDay" class="form-control" form="lighting" required>
+				  <option value="Too less">Very Less (I seldomly use the light bulbs in house during day)</option>
+				  <option value="Likely">Likely (I do very often use light bulbs in house during day)</option>
+				  <option value="Very Likely">Very Likely (I do typically use light bulbs in house during day)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="typelightday">Type Of Lamps in Days:</label>
+			<div class="col-sm-6">
+				<select name="TypeLightDay" id="TypeLightDay" class="form-control" form="lighting" required>
+				  <option value="Low Watt">Low Watt (<20W)</option>
+				  <option value="Medium Watt">Medium Watt (20-60W)</option>
+				  <option value="High Watt">High Watt (>60W)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="usagelightnight">Lamps in Night:</label>
+			<div class="col-sm-6">
+				<select name="UsageLightsNight" id="UsageLightsNight" class="form-control" form="lighting" required>
+				  <option value="Very Likely">Very Likely (I do typically use light bulbs in house during night)</option>
+				  <option value="Likely">Likely (I do very often use light bulbs in house during night)</option>
+				  <option value="Too less">Very Less (I mostly do not use the light bulbs in house during night)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="typelightday">Type Of Lamps in Night:</label>
+			<div class="col-sm-6">
+				<select name="TypeLightNight" id="TypeLightNight" class="form-control" form="lighting" required>
+				  <option value="High Watt">High Watt (>60W)</option>
+				  <option value="Medium Watt">Medium Watt (20-60W)</option>
+				  <option value="Low Watt">Low Watt (<20W)</option>				  
+				</select>
+			</div>
+		</div>
+		<br/>
+		<div class="container">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-md">Estimate</button>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pc">Recommendations</button>
+						<!-- Modal -->
+						<div id="pc" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+							<!-- Modal content-->
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title"><span style="color:darkred; text-align:center; display: block;">Certain Recommendations</span></h4>
+							  </div>
+							  <div class="modal-body">
+								<p><b>1.</b> Use natural light during the day instead of artificial lights.</p>
+								<p><b>2.</b> Install dimmer switches to reduce light to desired levels.</p>
+								<p><b>3.</b> Install the eco-friendly lights.</p>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</body>
+</html>

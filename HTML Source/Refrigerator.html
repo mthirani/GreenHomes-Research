@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome To Green Homes !</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>$(document).ready(function(){$('[data-toggle=\"tooltip\"]').tooltip();});</script>
+  <script>
+	$(document).ready(function(){
+		$(UsageFiltering).fadeOut(1);
+		$(CoverFiltering).fadeOut(1);
+		$(CoverYes).click(function(){
+			if($(CoverNo).is(':checked'))
+			{
+			 $(CoverNo).attr("checked", false);
+			 $(foods).attr("disabled",true);
+			 $(hotfoods).attr("disabled",true);
+			 $(storefoods).attr("disabled",true);
+			 $(spacefoods).attr("disabled",true);
+			 $(CoverFiltering).fadeOut();
+			}
+		});
+		$(CoverNo).click(function(){
+			if($(CoverYes).is(':checked'))
+			{
+			 $(CoverYes).attr("checked", false);
+			 $(foods).attr("disabled",false);
+			 $(hotfoods).attr("disabled",false);
+			 $(storefoods).attr("disabled",false);
+			 $(spacefoods).attr("disabled",false);
+			 $(CoverFiltering).fadeIn();
+			}
+		});
+		$(UsageSometimes).click(function(){
+			if($(UsageFrequently).is(':checked'))
+			{
+			 $(UsageFrequently).attr("checked", false);
+			 $(leavedoors).attr("disabled",true);
+			 $(airtightdoors).attr("disabled",true);
+			 $(UsageFiltering).fadeOut();
+			}
+		});
+		$(UsageFrequently).click(function(){
+			if($(UsageSometimes).is(':checked'))
+			{
+			 $(UsageSometimes).attr("checked", false);
+			 $(leavedoors).attr("disabled",false);
+			 $(airtightdoors).attr("disabled",false);
+			 $(UsageFiltering).fadeIn();
+			}
+		});
+	});
+  </script>
+  <script type="text/javascript">
+	function validateForm()
+    {
+		var conf=confirm("Press OK for submitting your data");
+		if(conf==true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+    }
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand">Green Homes</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+		<li><a href="GreenHomes.html" title="Home Page" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">HOME</a></li>
+        <li><a href="#" title="Services Offered" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">SERVICES</a></li>
+        <li><a href="#" title="About Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">ABOUT</a></li>
+        <li><a href="#" title="Contact Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="well" style="background-color: rgb(250,254,254)">
+	<div class="container">
+		<div class="alert alert-info container"><strong><center>Please fill out the required inputs to get the overall benefits in consumption and cost through your refrigerator!</center></strong></div>
+	</div>
+	<div class="container">
+	<form class="form-horizontal" name="refrigerator" id="refrigerator" role="form" method="GET" action="/validateRefrigerator" onsubmit="return validateForm()">
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="model">Age of Fridge:</label>
+			<div class="col-sm-6">
+				<select name="oldFridge" class="form-control" form="refrigerator" required>
+				  <option value="Less than 5 years">Less than 5 years</option>
+				  <option value="Between 5 - 10 years">Between 5 - 10 years</option>
+				  <option value="Greater than 10 years">Greater than 10 years</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="energystar">ENERGY STAR Fridge:</label>
+			<div class="col-sm-6">
+				<select name="EnergyStar" id="EnergyStar" class="form-control" form="refrigerator" required>
+				  <option value="Yes">Yes, I do have ENERGY STAR refrigerator in house</option>
+				  <option value="No">No, I do not have ENERGY STAR refrigerator in house</option>
+				  <option value="Do not know">Do not know</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="rating">Freezer Location:</label>
+			<div class="col-sm-6">
+				<select name="freezer" class="form-control" form="refrigerator" required>
+				  <option value="Top">Top</option>
+				  <option value="Bottom">Bottom</option>
+				  <option value="Side-By-Side">Side-By-Side</option>
+				  <option value="No freezer">No freezer</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="currenttemp">Set Temperature (&deg;C):</label>	
+			<div class="col-sm-6">
+				<select name="currentTemp" class="form-control" form="refrigerator" required>
+				  <option value="Too Cold">Too Cold: 1&deg;C - 2&deg;C</option>
+				  <option value="Mid Range">Mid Range: 3&deg;C - 5&deg;C</option>
+				  <option value="High Temperature">High Temperature: 6&deg;C - 8&deg;C</option>
+				  <option value="Do not know">Do not know</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="maximumtemp">Increase Temperature:</label>	
+			<div class="col-sm-6">
+				<select name="increaseTemp" class="form-control" form="refrigerator" required>
+				  <option value="Likely">Likely</option>
+				  <option value="Very Likely">Very Likely</option>
+				  <option value="Will Not Change">Probably Will Not Change</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="humidity">Humidity:</label>
+			<div class="col-sm-6">
+				<select name="humidity" class="form-control" form="refrigerator" required>
+				  <option value="Do Not Know">Do Not Know</option>	
+				  <option value="Low">Rot-Low</option>
+				  <option value="Wilt-High">Wilt-High</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="foods">Cover your foods:</label>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="CoverYes" id="CoverYes" value="Yes" checked>Yes, I do cover foods
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="CoverNo" id="CoverNo" value="No">No, I do not cover foods
+		</div>
+		<div id="CoverFiltering">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="foods">Kind Of Foods:</label>
+				<div class="col-sm-6">
+					<select name="foods" id="foods" class="form-control" form="refrigerator" disabled>
+					  <option value="Cooked Foods">Cooked Foods</option>	
+					  <option value="Raw Vegetables and Fruits">Raw Vegetables and Fruits</option>
+					  <option value="Canned Foods">Canned Foods</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="foods">Putting Hot Foods:</label>
+				<div class="col-sm-6">
+					<select name="hotfoods" id="hotfoods" class="form-control" form="refrigerator" disabled>
+					  <option value="Yes">Yes, I am putting hot foods</option>
+					  <option value="No">No, I am not putting hot foods</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="foods">Space Consumed:</label>
+				<div class="col-sm-6">
+					<select name="spacefoods" id="spacefoods" class="form-control" form="refrigerator" disabled>
+					  <option value="Not Much">Not Much</option>
+					  <option value="Medium Stuffed">Medium Stuffed</option>
+					  <option value="Highly Stuffed">Highly Stuffed</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="foods">Storing Food Items:</label>
+				<div class="col-sm-6">
+					<select name="storefoods" id="storefoods" class="form-control" form="refrigerator" disabled>
+					  <option value="Yes">Yes, I am storing the food items in an appropriate place</option>
+					  <option value="No">No, I am not storing the food items in an appropriate place</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="usage">Usage Of Fridge/ Day:</label>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="UsageSometimes" id="UsageSometimes" value="Yes" checked>Sometimes (<=10 times)
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="UsageFrequently" id="UsageFrequently" value="No">Frequently (>10 times)
+		</div>
+		<div id="UsageFiltering">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="doors">Leaving Doors Open:</label>
+				<div class="col-sm-6">
+					<select name="leavedoors" id="leavedoors" class="form-control" form="refrigerator" disabled>
+					  <option value="Yes">Yes, I am leaving the fridge doors open for too long</option>
+					  <option value="No">No, I am not leaving the fridge doors open for too long</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="doors">Doors Airtight:</label>
+				<div class="col-sm-6">
+					<select name="airtightdoors" id="airtightdoors" class="form-control" form="refrigerator" disabled>
+					  <option value="Yes">Yes, fridge and freezer doors are airtight</option>
+					  <option value="No">No, fridge and freezer doors are not airtight</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="container">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-md">Estimate</button>
+					</div>
+					<div class="col-sm-4">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fridge">Recommendations</button>
+						<!-- Modal -->
+						<div id="fridge" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+							<!-- Modal content-->
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title"><span style="color:darkred; text-align:center; display: block;">Certain Recommendations</span></h4>
+							  </div>
+							  <div class="modal-body">
+								<p><b>1.</b> Don't set fridge below 35&deg;F.</p>
+								<p><b>2.</b> Cover foods and liquids before putting them in fridge.</p>
+								<p><b>3.</b> Keep fridge and freezer doors closed as much as possible.</p>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</body>
+</html>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
