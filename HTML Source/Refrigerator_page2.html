@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome To Green Homes !</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>$(document).ready(function(){$('[data-toggle=\"tooltip\"]').tooltip();});</script>
+  <style>
+	.profile
+	{
+		color: DarkCyan;
+		font-weight: bold;
+	}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" style="font-size: 25px;">Refrigerator</a>
+    </div>
+  </div>
+</nav>
+<div class="well" style="background-color: rgb(250,254,254)">
+	<div class="container">
+		<div class="alert alert-info fade in">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<div id="estimate"><h5>This section will be used for displaying estimated/ actual cost of electrical consumption via refrigerator and questions generated below will be dynamic.</h5><h5>This section will also display appropriate recommendations once model is ready. Micro-Model Development is on progress.</h5></div></div>
+	</div>
+	<div class="container">
+	<form class="form-horizontal" name="refrigerator" id="refrigerator" role="form" method="POST" action="/completeRefrigerator">
+		<table class="table table-striped"><tbody><tr><td style="color: darkslategrey">
+		<div class="profile">The following questions ask you to tell us how likely you would be to change how you use your refrigerator.</div><br/>
+		<div class="form-group">
+			<div class="col-xs-6">
+			<label class="control-label" for="maximumtemp">Are you willing to increase the temperature of your refrigerator to XX&deg;F? </label>
+			</div>
+			<div class="col-sm-5">
+				<select name="increaseTemp" id="increaseTemp" class="form-control" form="refrigerator" required>
+				  <option value="Likely">Likely</option>
+				  <option value="Very Likely">Very Likely</option>
+				  <option value="Will Not Change">Probably Will Not Change</option>
+				</select>
+			</div>
+		</div>
+		</td></tr></tbody></table>
+		<div class="container">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-offset-6 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-md">Save & Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome To Green Homes !</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>$(document).ready(function(){$('[data-toggle=\"tooltip\"]').tooltip();});</script>
+  <script>
+	$(document).ready(function(){
+		$(GenderMale).click(function(){
+			if($(GenderFemale).is(':checked'))
+			{
+			 $(GenderFemale).attr("checked", false);
+			}
+			if($(GenderOther).is(':checked'))
+			{
+			 $(GenderOther).attr("checked", false);
+			}
+		});
+		$(GenderFemale).click(function(){
+			if($(GenderMale).is(':checked'))
+			{
+			 $(GenderMale).attr("checked", false);
+			}
+			if($(GenderOther).is(':checked'))
+			{
+			 $(GenderOther).attr("checked", false);
+			}
+		});
+		$(GenderOther).click(function(){
+			if($(GenderMale).is(':checked'))
+			{
+			 $(GenderMale).attr("checked", false);
+			}
+			if($(GenderFemale).is(':checked'))
+			{
+			 $(GenderFemale).attr("checked", false);
+			}
+		});
+	});
+  </script>
+  <style>
+	.profile
+	{
+		color: DarkCyan;
+		font-weight: bold;
+	}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" style="font-size: 25px;">Demgraphics</a>
+    </div>
+  </div>
+</nav>
+<div class="well" style="background-color: rgb(250,254,254)">
+	<div class="container">
+	<form class="form-horizontal" name="demographics" id="demographics" role="form" method="POST" action="/submitDemographics">
+		<table class="table table-striped"><tbody><tr><td style="color: darkslategrey">
+		<div class="profile">The following questions ask you to let us know more about you.</div><br/>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="age">How old are you? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="age" id="age" class="form-control" form="demographics" required>
+				  <option value="Under 13">Under 13</option>
+				  <option value="13-17">13-17</option>
+				  <option value="18-25">18-25</option>
+				  <option value="26-34">26-34</option>
+				  <option value="35-54">35-54</option>
+				  <option value="55-64">55-64</option>
+				  <option value="65 or over">65 or over</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="gender">What is your gender? </label>
+			</div>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="GenderMale" id="GenderMale" value="GenderMale" checked>Male
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="GenderFemale" id="GenderFemale" value="GenderFemale">Female
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="GenderOther" id="GenderOther" value="GenderOther">Other
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="education">What is the highest level of education you have completed? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="education" id="education" class="form-control" form="demographics" required>
+				  <option value="Less than High School">Less than High School</option>
+				  <option value="High School/ GED">High School/ GED</option>
+				  <option value="Some College">Some College</option>
+				  <option value="2-year College Degree">2-year College Degree</option>
+				  <option value="4-year College Degree">4-year College Degree</option>
+				  <option value="Master's Degree">Master's Degree</option>
+				  <option value="Doctoral Degree">Doctoral Degree</option>
+				  <option value="Professional Degree (JD/ MD)">Professional Degree (JD/ MD)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="race">What is your race? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="race" id="race" class="form-control" form="demographics" required>
+				  <option value="White/ Caucasian">White/ Caucasian</option>
+				  <option value="African/ American">African/ American</option>
+				  <option value="Hispanic">Hispanic</option>
+				  <option value="Asian">Asian</option>
+				  <option value="Native American">Native American</option>
+				  <option value="Pacific Islander">Pacific Islander</option>
+				  <option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="live">Do you live: </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="live" id="live" class="form-control" form="demographics" required>
+				  <option value="Alone">Alone</option>
+				  <option value="With family">With family</option>
+				  <option value="With roommates">With roommates</option>
+				  <option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="income">What is your combined household income? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="income" id="income" class="form-control" form="demographics" required>
+				  <option value="Less than 30,000">Less than 30,000</option>
+				  <option value="30,000-39,999">30,000-39,999</option>
+				  <option value="40,000-49,999">40,000-49,999</option>
+				  <option value="50,000-59,999">50,000-59,999</option>
+				  <option value="60,000-69,999">60,000-69,999</option>
+				  <option value="70,000-79,999">70,000-79,999</option>
+				  <option value="80,000-89,999">80,000-89,999</option>
+				  <option value="90,000-99,999">90,000-99,999</option>
+				  <option value="100,000 or more">100,000 or more</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="housestats">Do you: </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="housestats" id="housestats" class="form-control" form="demographics" required>
+				  <option value="Own a house">Own a house</option>
+				  <option value="Rent a house">Rent a house</option>
+				  <option value="Rent an apartment">Rent an apartment</option>
+				  <option value="Rent a room in house">Rent a room in house</option>
+				  <option value="Live with home-owner or renter">Live with home-owner or renter</option>
+				  <option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="placeoflive">Do you live in a: </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="placeoflive" id="placeoflive" class="form-control" form="demographics" required>
+				  <option value="City">City</option>
+				  <option value="Suburb">Suburb</option>
+				  <option value="Rural Area">Rural Area</option>
+				  <option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="numberPeople">How many people live in your house (including yourself)? </label>
+			</div>
+			<div class="col-sm-4">
+				<input type="number" form="demographics" class="form-control" name="numberPeople" id="numberPeople" min="1" placeholder="Enter the # of people living in your house" required/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="typeofhome">What type of home do you live in? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="typeofhome" id="typeofhome" class="form-control" form="demographics" required>
+				  <option value="Row House">Row House</option>
+				  <option value="Apartment or Condo">Apartment or Condo</option>
+				  <option value="Standalone House">Standalone House</option>
+				  <option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="largehouse">How large is your house? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="largeHouse" id="largeHouse" class="form-control" form="demographics" required>
+				  <option value="Quite Big">Quite Big</option>
+				  <option value="Medium">Medium</option>
+				  <option value="Small">Small</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="oldhouse">How old is your house? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="oldHouse" id="oldHouse" class="form-control" form="demographics" required>
+				  <option value="Greater than 10 years">Greater than 10 years</option>
+				  <option value="Between 5-10 years">Between 5-10 years</option>
+				  <option value="Less than 5 years">Less than 5 years</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="heatingSystem">What type of heating system does your home use? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="heatingSystem" id="heatingSystem" class="form-control" form="demographics" required>
+				  <option value="Electric">Electric</option>
+				  <option value="Gas">Gas</option>
+				  <option value="Oil">Oil</option>
+				  <option value="Wood">Wood</option>
+				  <option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="billSummer">About how much is your monthly electricity bill in summer? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="billSummer" id="billSummer" class="form-control" form="demographics" required>
+				  <option value="Less than $50">Less than $50</option>
+				  <option value="$50-100">$50-100</option>
+				  <option value="More than $100">More than $100</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-5">
+			<label class="control-label" for="billWinter">About how much is your monthly electricity bill in winter? </label>
+			</div>
+			<div class="col-sm-4">
+				<select name="billWinter" id="billWinter" class="form-control" form="demographics" required>
+				  <option value="Less than $50">Less than $50</option>
+				  <option value="$50-100">$50-100</option>
+				  <option value="More than $100">More than $100</option>
+				</select>
+			</div>
+		</div>
+		</td></tr></tbody></table>
+		<div class="container">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-offset-5 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-md">Submit Survey</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</body>
+</html>

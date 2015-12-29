@@ -10,30 +10,225 @@
   <script>$(document).ready(function(){$('[data-toggle=\"tooltip\"]').tooltip();});</script>
   <script>
 	$(document).ready(function(){
-		$(OperationFiltering).fadeOut(1);
+		$(".form-group").change(function(){
+			computeComputerSavings();
+		});
+	});
+	function computeComputerSavings()
+	{
+		var power = 0;
+		var additionalPower = 0;
+		var usagePower = 0;
+		var estimatedPower = 0;
+		var savePower = 0;
+		var calcHoursUsage = 0;
+		if($(Desktop).is(':checked'))
+		{
+			power = 200;
+			if($(Monitor).val() == "CRT")
+				additionalPower = 80;
+			else if($(Monitor).val() == "LCD")
+				additionalPower = 40;
+			else
+				additionalPower = 20;
+		}
+		if($(Laptop).is(':checked'))
+		{
+			power = 40;
+		}
+		if($(EnergyStarYes).is(':checked'))
+			power = 0.5*power;
+		if($(PCUsageType).val() == "Workstation")
+			usagePower = power + 0.4*power;
+		else if($(PCUsageType).val() == "Browsing")
+			usagePower = power + 0.7*power;
+		else
+			usagePower = power + 1.0*power;
+		
+		if($(EnergyStarYes).is(':checked'))
+			savePower = usagePower;
+		else
+			savePower = 0.5*usagePower;
+		
+		if($(Multiple).is(':checked'))
+		{
+			usagePower = usagePower + 0.3*usagePower;
+			if($(appsrunning).val() == "Yes")
+				savePower = savePower + 0.3*savePower;
+		}
+		usagePower = usagePower + additionalPower;
+		savePower = savePower + additionalPower;		
+		calcHoursUsage = $(PCUsageMonths).val()*$(PCUsageDaily).val();
+		var extraPower = 0;
+		var extraHoursUsage = 0;
+		var saveAdditionalPower = 0;
+		var consumedKWH = 0.0;
+		var estimatedKWH = 0.0;
+		if(!($(ShutDown).is(':checked')))
+		{
+			if($(EnergyStarYes).is(':checked'))
+				saveAdditionalPower = power;
+			else
+				saveAdditionalPower = 0.5*power;
+			saveAdditionalPower = saveAdditionalPower - 0.75*saveAdditionalPower;
+			extraHoursUsage = 31*24 - calcHoursUsage;
+			if($(Sleep).is(':checked'))
+				extraPower = power - 0.75*power;
+			else if($(Running).is(':checked') && ($(ScreenSaver).val() == "Yes"))
+				extraPower = power + 0.4*power;
+			else if($(Running).is(':checked') && ($(ScreenSaver).val() == "No"))
+				extraPower = power;
+			else if($(RunDisplay).is(':checked') && ($(ScreenSaver).val() == "Yes"))
+				extraPower = power + 0.4*power + additionalPower;
+			else
+				extraPower = power + additionalPower;
+		}
+		consumedKwH = ((usagePower*calcHoursUsage) + (extraPower*extraHoursUsage))/1000;
+		estimatedKwH = ((savePower*calcHoursUsage) + (saveAdditionalPower*extraHoursUsage))/1000;
+		consumedKwH = consumedKwH.toFixed(2);
+		estimatedKwH = estimatedKwH.toFixed(2);
+		saveKwH = consumedKwH - estimatedKwH;
+		saveKwH = saveKwH.toFixed(2);
+		if(consumedKwH == estimatedKwH)
+			$(estimate).html("Your estimated and consumed units are " + consumedKwH + "Kwh. You have set your computer to an optimized level");
+		else
+			$(estimate).html("Your estimated consumption is " + consumedKwH + "Kwh. You can save around " + saveKwH + "Kwh units. Try one of the below recommendations to save your electricity: ");
+		var count = 1;
+		if(($(EnergyStarNo).is(':checked') || $(EnergyStarNotKnow).is(':checked')) && (saveKwH > 0))
+		{
+			$(estimate).append("<p>" + count + ". Use ENERGY STAR rated PCs.");
+			count = count + 1;
+		}
+		if($(ScreenSaver).val() == "Yes" && (saveKwH > 0) && !($(Sleep).is(':checked')) && !($(ShutDown).is(':checked')))
+		{
+			$(estimate).append("<p>" + count + ". Do not use screen savers - just dim or turn off the monitor when not in use.");
+			count = count + 1;
+		}
+		if($(Multiple).is(':checked') && $(appsrunning).val() == "No" && (saveKwH > 0))
+		{
+			$(estimate).append("<p>" + count + ". Close applications not currently in use while using your computer.");
+			count = count + 1;
+		}
+		if(!($(Sleep).is(':checked')) && !($(ShutDown).is(':checked')) && (saveKwH > 0))
+		{
+			$(estimate).append("<p>" + count + ". Use the power management features of your operating system to put your computer to sleep.");
+			count = count + 1;
+		}
+		if(($(RunDisplay).is(':checked') || $(Running).is(':checked')) && (saveKwH > 0))
+		{
+			$(estimate).append("<p>" + count + ". Turn off the monitor and PC if you are not going to use the PC for 2 hours.");
+			count = count + 1;
+		}
+	}
+  </script>
+  <script>
+	$(document).ready(function(){
 		$(ApplicationsFiltering).fadeOut(1);
-		$(SwitchOff).click(function(){
+		$(MonitorFiltering).fadeOut(1);
+		$(EnergyStarYes).click(function(){
+			if($(EnergyStarNo).is(':checked'))
+			{
+			 $(EnergyStarNo).attr("checked", false);
+			}
+			if($(EnergyStarNotKnow).is(':checked'))
+			{
+			 $(EnergyStarNotKnow).attr("checked", false);
+			}
+		});
+		$(EnergyStarNo).click(function(){
+			if($(EnergyStarYes).is(':checked'))
+			{
+			 $(EnergyStarYes).attr("checked", false);
+			}
+			if($(EnergyStarNotKnow).is(':checked'))
+			{
+			 $(EnergyStarNotKnow).attr("checked", false);
+			}
+		});
+		$(EnergyStarNotKnow).click(function(){
+			if($(EnergyStarYes).is(':checked'))
+			{
+			 $(EnergyStarYes).attr("checked", false);
+			}
+			if($(EnergyStarNo).is(':checked'))
+			{
+			 $(EnergyStarNo).attr("checked", false);
+			}
+		});
+		$(Laptop).click(function(){
+			if($(Desktop).is(':checked'))
+			{
+			 $(Desktop).attr("checked", false);
+			 $(MonitorFiltering).fadeOut();
+			}
+		});
+		$(Desktop).click(function(){
+			if($(Laptop).is(':checked'))
+			{
+			 $(Laptop).attr("checked", false);
+			 $(MonitorFiltering).fadeIn();
+			}
+		});
+		$(ShutDown).click(function(){
 			if($(Running).is(':checked'))
 			{
 			 $(Running).attr("checked", false);
-			 $(runningpurpose).attr("disabled",true);
-			 $(OperationFiltering).fadeOut();
+			}
+			if($(Sleep).is(':checked'))
+			{
+			 $(Sleep).attr("checked", false);
+			}
+			if($(RunDisplay).is(':checked'))
+			{
+			 $(RunDisplay).attr("checked", false);
 			}
 		});
 		$(Running).click(function(){
-			if($(SwitchOff).is(':checked'))
+			if($(ShutDown).is(':checked'))
 			{
-			 $(SwitchOff).attr("checked", false);
-			 $(runningpurpose).attr("disabled",false);
-			 $(OperationFiltering).fadeIn();
+			 $(ShutDown).attr("checked", false);
+			}
+			if($(Sleep).is(':checked'))
+			{
+			 $(Sleep).attr("checked", false);
+			}
+			if($(RunDisplay).is(':checked'))
+			{
+			 $(RunDisplay).attr("checked", false);
+			}
+		});
+		$(Sleep).click(function(){
+			if($(ShutDown).is(':checked'))
+			{
+			 $(ShutDown).attr("checked", false);
+			}
+			if($(Running).is(':checked'))
+			{
+			 $(Running).attr("checked", false);
+			}
+			if($(RunDisplay).is(':checked'))
+			{
+			 $(RunDisplay).attr("checked", false);
+			}
+		});
+		$(RunDisplay).click(function(){
+			if($(ShutDown).is(':checked'))
+			{
+			 $(ShutDown).attr("checked", false);
+			}
+			if($(Running).is(':checked'))
+			{
+			 $(Running).attr("checked", false);
+			}
+			if($(Sleep).is(':checked'))
+			{
+			 $(Sleep).attr("checked", false);
 			}
 		});
 		$(Single).click(function(){
 			if($(Multiple).is(':checked'))
 			{
 			 $(Multiple).attr("checked", false);
-			 $(contextswitch).attr("disabled",true);
-			 $(appsrunning).attr("disabled",true);
 			 $(ApplicationsFiltering).fadeOut();
 			}
 		});
@@ -41,27 +236,18 @@
 			if($(Single).is(':checked'))
 			{
 			 $(Single).attr("checked", false);
-			 $(contextswitch).attr("disabled",false);
-			 $(appsrunning).attr("disabled",false);
 			 $(ApplicationsFiltering).fadeIn();
 			}
 		});
 	});
   </script>
-  <script type="text/javascript">
-	function validateForm()
-    {
-		var conf=confirm("Press OK for submitting your data");
-		if(conf==true)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}		
-    }
-  </script>
+  <style>
+	.profile
+	{
+		color: DarkCyan;
+		font-weight: bold;
+	}
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -72,26 +258,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand">Green Homes</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-		<li><a href="GreenHomes.html" title="Home Page" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">HOME</a></li>
-        <li><a href="#" title="Services Offered" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">SERVICES</a></li>
-        <li><a href="#" title="About Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">ABOUT</a></li>
-        <li><a href="#" title="Contact Us" data-toggle="tooltip" data-placement="bottom" data-trigger="hover">CONTACT</a></li>
-      </ul>
+      <a class="navbar-brand" style="font-size: 25px;">Computer</a>
     </div>
   </div>
 </nav>
 <div class="well" style="background-color: rgb(250,254,254)">
 	<div class="container">
-		<div class="alert alert-info container"><strong><center>Please fill out the required inputs to get the overall benefits in consumption and cost through your computer!</center></strong></div>
-	</div>
-	<div class="container">
-	<form class="form-horizontal" name="computer" id="computer" role="form" method="GET" onsubmit="return validateForm()">
+	<form class="form-horizontal" name="computer" id="computer" role="form" method="POST" action="/submitComputer">
+		<table class="table table-striped">
+		<tbody><tr><td style="color: darkslategrey">
+		<div class="profile">The following questions ask you to describe your computer.</div><br/>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="model">Age of Computer:</label>
+			<div class="col-xs-4">
+			<label class="control-label" for="model">How old is your computer? </label>
+			</div>
 			<div class="col-sm-6">
 				<select name="OldComputer" id="OldComputer" class="form-control" form="computer" required>
 				  <option value="Less than 5 years">Less than 5 years</option>
@@ -101,47 +281,100 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="monitor">Monitor Type:</label>
-				<div class="col-sm-6">
+			<div class="col-xs-4">
+			<label class="control-label" for="applications">What device are you using? </label>
+			</div>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Laptop" id="Laptop" value="Laptop" checked>Laptop or Notebook
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Desktop" id="Desktop" value="Desktop">Desktop
+		</div>
+		<div class="form-group">
+			<div class="col-xs-4">
+			<label class="control-label" for="monitor">What monitor are you using? </label>
+			</div>
+			<div class="col-sm-6">
 				<select name="Monitor" id="Monitor" class="form-control" form="computer" required>
 				  <option value="LCD">Liquid Crystal Display (LCD)</option>
-				  <option value="LED">Light Emitting Diode (LED)</option>
 				  <option value="CRT">Cathod Ray Tube (CRT)</option>
+				  <option value="LED">Light Emitting Diode (LED)</option>
 				</select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="energystar">ENERGY STAR PC:</label>
+			<div class="col-xs-4">
+			<label class="control-label" for="oldmonitor">How old is your monitor? </label>
+			</div>
 			<div class="col-sm-6">
-				<select name="EnergyStar" id="EnergyStar" class="form-control" form="computer" required>
-				  <option value="Yes">Yes, I do have installed ENERGY STAR computer in house</option>
-				  <option value="No">No, I do not have ENERGY STAR computer in house</option>
-				  <option value="Do not know">Do not know</option>
+				<select name="OldMonitor" id="OldMonitor" class="form-control" form="computer" required>
+				  <option value="Less than 5 years">Less than 5 years</option>
+				  <option value="Between 5 - 10 years">Between 5 - 10 years</option>
+				  <option value="Greater than 10 years">Greater than 10 years</option>
+				</select>
+			</div>
+		</div>
+		<div id="MonitorFiltering">
+		<!--<div class="form-group">
+			<div class="col-xs-4">
+			<label class="control-label" for="monitor">What monitor are you using? </label>
+			</div>
+			<div class="col-sm-6">
+				<select name="Monitor" id="Monitor" class="form-control" form="computer" required>
+				  <option value="LCD">Liquid Crystal Display (LCD)</option>
+				  <option value="CRT">Cathod Ray Tube (CRT)</option>
+				  <option value="LED">Light Emitting Diode (LED)</option>
 				</select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="pcusagetype">Usage Type:</label>
+			<div class="col-xs-4">
+			<label class="control-label" for="oldmonitor">How old is your monitor? </label>
+			</div>
+			<div class="col-sm-6">
+				<select name="OldMonitor" id="OldMonitor" class="form-control" form="computer" required>
+				  <option value="Less than 5 years">Less than 5 years</option>
+				  <option value="Between 5 - 10 years">Between 5 - 10 years</option>
+				  <option value="Greater than 10 years">Greater than 10 years</option>
+				</select>
+			</div>
+		</div>-->
+		</div>
+		<div class="form-group">
+			<div class="col-xs-4">
+			<label class="control-label" for="energystar">Is your computer ENERGY STAR rated? </label>
+			</div>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="EnergyStarYes" id="EnergyStarYes" value="Yes" checked>Yes
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="EnergyStarNo" id="EnergyStarNo" value="No">No
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="EnergyStarNotKnow" id="EnergyStarNotKnow" value="Do Not Know">I don't know
+		</div>
+		</td></tr>
+		<tr><td style="color: darkslategrey">
+		<div class="profile">The following questions ask you to describe how you use your computer.</div><br/>
+		<div class="form-group">
+			<div class="col-xs-4">
+			<label class="control-label" for="pcusagetype">What do you use your computer for? </label>
+			</div>
 			<div class="col-sm-6">
 				<select name="PCUsageType" id="PCUsageType" class="form-control" form="computer" required>
 				  <option value="Workstation">Workstation</option>
 				  <option value="Gaming">Gaming</option>
 				  <option value="Browsing">Browsing</option>
-				  <option value="Others">Other Purposes</option>
 				</select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="pcusage">Monthly Usage:</label>
-			<div class="col-sm-6">
-				<select name="PCUsage" id="PCUsage" class="form-control" form="computer" required>
-				  <option value="Seldomly">I do seldomly use my PC</option>
-				  <option value="Frequently">I do frequently use my PC</option>
-				</select>
+			<div class="col-xs-4">
+			<label class="control-label" for="pcusage">How frequently do you use your computer? </label>
+			</div>
+			<div class="col-sm-3">
+				<input type="number" class="form-control" form="computer" name="PCUsageMonths" id="PCUsageMonths" min="1" max="31" placeholder="Enter working days per month" required/>
+			</div>
+			<div class="col-sm-3">
+				<input type="number" class="form-control" form="computer" name="PCUsageDaily" id="PCUsageDaily" min="1" max="24" placeholder="Enter working hours per day" required/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="screensaver">ScreenSaver Settings:</label>
+			<div class="col-xs-4">
+			<label class="control-label" for="screensaver">Do you use screensaver in computer? </label>
+			</div>
 			<div class="col-sm-6">
 				<select name="ScreenSaver" id="ScreenSaver" class="form-control" form="computer" required>
 				  <option value="Yes">I do use screen saver in my PC settings</option>
@@ -150,78 +383,49 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="operation">Operation After Work:</label>
-			<input type="radio" style="vertical-align: middle; margin: 10px;" name="SwitchOff" id="SwitchOff" value="SwitchOff" checked>Switch off or put my PC in sleep state
-			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Running" id="Running" value="Running">Keep my PC running
-		</div>
-		<div id="OperationFiltering">
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="purpose">Running Purpose:</label>
-				<div class="col-sm-6">
-					<select name="runningpurpose" id="runningpurpose" class="form-control" form="computer" disabled>
-					  <option value="ScreenSaverON">I do mostly use screen saver in computer for displaying advertisements/ banners</option>
-					  <option value="Downloading">I do mostly use my PC for dowloading activities after my work</option>
-					  <option value="ScreenSaverAndDownloading">I do mostly use my PC for downloading tasks and displaying banners after my work</option>
-					  <option value="Backend">I do mostly use my PC for other backend activities after my work</option>
-					</select>
-				</div>
+			<div class="col-xs-4">
+			<label class="control-label" for="operation">How do you set your computer after work? </label>
 			</div>
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="ShutDown" id="ShutDown" value="ShutDown" checked>Shut Down
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Sleep" id="Sleep" value="Sleep">Sleep Mode
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Running" id="Running" value="Running">Keep PC Running
+			<input type="radio" style="vertical-align: middle; margin: 10px;" name="RunDisplay" id="RunDisplay" value="RunDisplay">Keep PC and Display Running
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="applications">Multiple Applications:</label>
+			<div class="col-xs-4">
+			<label class="control-label" for="applications">Do you use multiple applications while working? </label>
+			</div>
 			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Single" id="Single" value="Single" checked>Do not work on multiple applications during work
 			<input type="radio" style="vertical-align: middle; margin: 10px;" name="Multiple" id="Multiple" value="Multiple">Work on multiple applications during work
 		</div>
-		<div id="ApplicationsFiltering">
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="switching">Context Switching:</label>
-				<div class="col-sm-6">
-					<select name="contextswitch" id="contextswitch" class="form-control" form="computer" disabled>
-					  <option value="Sometimes">I seldomly switched from one application to another during my work</option>
-					  <option value="Frequently">I frequently switched from one application to another during my work</option>
-					</select>
-				</div>
+		<div class="form-group">
+			<div class="col-xs-4">
+			<label class="control-label" for="apps">Do you require all applications while working? </label>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="apps">Running Applications:</label>
+			<div class="col-sm-6">
+				<select name="appsrunning" id="appsrunning" class="form-control" form="computer">
+				  <option value="Yes">Yes, all applications needs to be running when I am not using it</option>
+				  <option value="No">No, all applications does not needs to be running when I am not using it</option>
+				</select>
+			</div>
+		</div>
+		<div id="ApplicationsFiltering">
+		<!--<div class="form-group">
+				<label class="control-label col-sm-3" for="apps">Do all the applications required? </label>
 				<div class="col-sm-6">
-					<select name="appsrunning" id="appsrunning" class="form-control" form="computer" disabled>
+					<select name="appsrunning" id="appsrunning" class="form-control" form="computer">
 					  <option value="Yes">Yes, all applications needs to be running when I am not using it</option>
 					  <option value="No">No, all applications does not needs to be running when I am not using it</option>
 					</select>
 				</div>
-			</div>
+			</div>-->
 		</div>
-		<br/>
+		</td></tr></tbody></table>
 		<div class="container">
 			<div class="form-group">
 				<div class="row">
-					<div class="col-sm-offset-2 col-sm-4">
-						<button type="submit" class="btn btn-primary btn-md">Estimate</button>
-					</div>
-					<div class="col-sm-4">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pc">Recommendations</button>
-						<!-- Modal -->
-						<div id="pc" class="modal fade" role="dialog">
-						  <div class="modal-dialog">
-							<!-- Modal content-->
-							<div class="modal-content">
-							  <div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title"><span style="color:darkred; text-align:center; display: block;">Certain Recommendations</span></h4>
-							  </div>
-							  <div class="modal-body">
-								<p><b>1.</b> Turn off the computer and monitor if you&rsquo;r not going to use the Workstation for 2 hours.</p>
-								<p><b>2.</b> Use the power management features of your operating system to put your computer to sleep when you are not using it.</p>
-								<p><b>3.</b> Close applications not currently in use while using your computer.</p>
-								<p><b>4.</b> Don&rsquo;t use a screen saver-just dim or turn off the monitor when not in use.</p>
-							  </div>
-							  <div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							  </div>
-							</div>
-						  </div>
-						</div>
+					<div class="col-sm-offset-4 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-md">Save & Next</button>
 					</div>
 				</div>
 			</div>
@@ -231,18 +435,3 @@
 </div>
 </body>
 </html>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
